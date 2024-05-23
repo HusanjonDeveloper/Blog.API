@@ -43,11 +43,11 @@ namespace Blog.Data.Repositories
         {
             _DbContext.Users.Add(user);
             await _DbContext.SaveChangesAsync();
-           
+
         }
         public async Task Update(User user)
         {
-           _DbContext.Users.Update(user);
+            _DbContext.Users.Update(user);
             await _DbContext.SaveChangesAsync();
         }
 

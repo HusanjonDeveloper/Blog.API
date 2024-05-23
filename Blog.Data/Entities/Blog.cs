@@ -6,12 +6,15 @@ namespace Blog.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public Guid Userid { get; set; }
-        public User? User { get; set; }
-        public List<Post>? Posts { get; set; }
+        public virtual User? User { get; set; }
+        public virtual List<Post>? Posts { get; set; }
     }
 }

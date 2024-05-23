@@ -1,6 +1,4 @@
-﻿using Blog.Data.Entities;
-
-namespace Blog.Data.Repositories
+﻿namespace Blog.Data.Repositories
 {
     public interface IBlogRepository
     {

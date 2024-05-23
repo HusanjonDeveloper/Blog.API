@@ -2,7 +2,7 @@
 
 namespace Blog.Data.Repositories
 {
-    public  interface IPostRepository
+    public interface IPostRepository
     {
         // GetAll
         // GetByid

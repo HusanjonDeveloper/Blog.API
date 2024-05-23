@@ -17,5 +17,6 @@ namespace Blog.Data.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public string? PhotoUrl { get; set; }
+        public virtual List<Blog?> Blogs { get; set; }
     }
 }

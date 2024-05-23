@@ -39,13 +39,13 @@ namespace Blog.Data.Repositories
         }
         public async Task Add(Entities.Blog blog)
         {
-           _DbContext.Blogs.Add(blog);
+            _DbContext.Blogs.Add(blog);
             await _DbContext.SaveChangesAsync();
         }
 
         public async Task Update(Entities.Blog blog)
         {
-           _DbContext.Update(blog);
+            _DbContext.Update(blog);
             await _DbContext.SaveChangesAsync();
         }
 

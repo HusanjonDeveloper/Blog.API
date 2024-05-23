@@ -24,7 +24,7 @@ namespace Blog.Data.Repositories
             var post = await _DbContext.Posts.ToListAsync();
             return post;
         }
-        public async Task<Post> GetById(int  id)
+        public async Task<Post> GetById(int id)
         {
             var post = await _DbContext.Posts.FirstOrDefaultAsync(p => p.id == id);
             if (post is null) throw new Exception("user not found");
@@ -37,13 +37,13 @@ namespace Blog.Data.Repositories
         }
         public async Task Update(Post post)
         {
-           _DbContext.Posts.Update(post);
+            _DbContext.Posts.Update(post);
             await _DbContext.SaveChangesAsync();
         }
 
         public async Task Delete(Post post)
         {
-           _DbContext.Remove(post);
+            _DbContext.Remove(post);
             await _DbContext.SaveChangesAsync();
         }
 

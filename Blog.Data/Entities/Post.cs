@@ -17,7 +17,7 @@ namespace Blog.Data.Entities
 
         public string AuthorFullName { get; set; }
         public int Blogid { get; set; }
-        public Blog? Blog { get; set; }
+        public virtual Blog? Blog { get; set; }
 
     }
 }
