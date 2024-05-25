@@ -54,7 +54,7 @@ namespace Blog.Data.Repositories
         public async Task Delete(User user)
         {
             _DbContext?.Users.Remove(user);
-            await _DbContext.SaveChangesAsync();
+            await _DbContext!.SaveChangesAsync();
         }
 
 
