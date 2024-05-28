@@ -10,7 +10,7 @@
         // Delete
         Task<List<Entities.Blog>> GetAll();
         Task<Entities.Blog> GetByid(int id);
-        Task<Entities.Blog?> GetByUsername(string name);
+        Task<Entities.Blog?> GetByName(string name);
         Task Add(Entities.Blog blog);
         Task Update(Entities.Blog blog);
         Task Delete(Entities.Blog blog);

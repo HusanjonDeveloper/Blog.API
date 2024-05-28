@@ -32,9 +32,9 @@ namespace Blog.Data.Repositories
             if (blog is null) throw new Exception("id not found");
             return blog;
         }
-        public async Task<Entities.Blog?> GetByUsername(string name)
+        public async Task<Entities.Blog?> GetByName(string name)
         {
-            var blog = await _DbContext.Blogs.FirstOrDefaultAsync(n => n.Name == name);
+            var blog = await _DbContext.Blogs.FirstOrDefaultAsync(b => b.Name.ToLower() == name.ToLower());
             return blog;
         }
         public async Task Add(Entities.Blog blog)
