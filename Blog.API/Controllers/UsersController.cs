@@ -1,4 +1,5 @@
-﻿using Blog.Services.Api;
+﻿using Blog.Common.Models.User;
+using Blog.Services.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers
@@ -17,8 +18,16 @@ namespace Blog.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _userService.GetAllUsers();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+          
         }
 
         [HttpGet("{userId:guid}")]
@@ -28,6 +37,63 @@ namespace Blog.API.Controllers
             try
             {
                 var user = await _userService.GetUserById(userId);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("{AddUsers}")]
+        public async Task<IActionResult> AddUsers([FromBody]CreateUserModel model)
+        {
+            try
+            {
+                var user = await _userService.AddUser(model);
+                return Ok(user);    
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("{Login}")]
+        public async Task<IActionResult> Login([FromBody]LoginUserModel model)
+        {
+            try
+            {
+                var user = await _userService.Login(model);
+                return Ok(user);    
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("{usersid:guid}")]
+        public async Task<IActionResult> UpdataUser(Guid userId, [FromBody] UpdateUserModel model)
+        {
+            try
+            {
+                var user = await _userService.UpdateUser(userId, model);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{Users:guid}")]
+
+        public async Task<IActionResult> DeleteUser(Guid userid)
+        {
+            try
+            {
+                var user = await _userService.DeleteUser(userid);
                 return Ok(user);
             }
             catch (Exception e)

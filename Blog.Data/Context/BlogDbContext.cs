@@ -7,13 +7,12 @@ namespace Blog.Data.Context
     {
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
-
         }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString:"BlogDbContext");
+            optionsBuilder.UseSqlServer("Server=LAPTOP-1FG38VDK;Database=newContext;Integrated Security=true;TrustServerCertificate=True;");
         }
 
         public DbSet<Data.Entities.User> Users { get; set; }
