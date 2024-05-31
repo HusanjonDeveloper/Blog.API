@@ -1,5 +1,4 @@
 ﻿using Blog.Services.Api.User;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers
@@ -23,10 +22,10 @@ namespace Blog.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet("{userid:guid}")]
-        public async Task<IActionResult> GetUsersById(Guid userid)
+        [HttpGet("{userId:guId}")]
+        public async Task<IActionResult> GetUsersById(Guid userId)
         {
-            var user = await _userService.GetUserById(userid);
+            var user = await _userService.GetUserById(userId);
             return Ok(user);
         }
     }

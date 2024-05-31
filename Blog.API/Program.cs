@@ -3,7 +3,6 @@ using Blog.Data.Repositories;
 using Blog.Services.Api.Blog;
 using Blog.Services.Api.Post;
 using Blog.Services.Api.User;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +26,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<BlogService>();
 builder.Services.AddScoped<PostService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
