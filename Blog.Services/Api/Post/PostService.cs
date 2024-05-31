@@ -26,7 +26,7 @@ namespace Blog.Services.Api.Post
         public async Task<PostDto> GetPostById(int postId)
         {
             var posts = await _postRepository.GetAll();
-            var post = posts.FirstOrDefault(x => x.id == postId);
+            var post = posts.FirstOrDefault(x => x.Id == postId);
             if (post is null) throw new Exception($"The post is not found with \"{postId}\"");
             return post.ParseToModel();
 
@@ -54,7 +54,7 @@ namespace Blog.Services.Api.Post
                Title = model.Title,
                Content = model.Content,
                AuthorFullName = $"{user.FirstName} {user.LastName}", 
-               Blogid = blogId,
+               BlogId = blogId,
             };
 
             await _postRepository.Add(post);
@@ -92,7 +92,7 @@ namespace Blog.Services.Api.Post
         private async Task<List<Data.Entities.Post>?> FilteredPosts(Guid userId, int blogId)
         {
             var blog = await CheckBlog(userId, blogId);
-            var filteredPosts = blog.Posts?.Where(post => post.id == blogId).ToList();
+            var filteredPosts = blog.Posts?.Where(post => post.Id == blogId).ToList();
             return filteredPosts;
         }
 
@@ -105,16 +105,16 @@ namespace Blog.Services.Api.Post
         private async Task<Data.Entities.Blog> CheckBlog(Guid userId, int blogId)
         {
             var user = await CheckUser(userId);
-            var blog = user.Blogs.FirstOrDefault(blog => blog.Id == blogId);
-            if (blog is null) throw new Exception($"Not found blog with \"{blogId}\"");
+            var blog = user.Blogs.FirstOrDefault(blog => blog?.Id == blogId);
+            if (blog is null) throw new Exception(message:$"Not found blog with \"{blogId}\"");
             return blog;
         }
 
         private async Task<Data.Entities.Post> CheckPost(Guid userId, int blogId, int postId)
         {
             var blog = await CheckBlog(userId, blogId);
-            var post = blog.Posts?.FirstOrDefault(p => p.id == postId);
-            if (post is null) throw new Exception($"The post is not found with \"{postId}\"");
+            var post = blog.Posts?.FirstOrDefault(p => p.Id == postId);
+            if (post is null) throw new Exception(message:$"The post is not found with \"{postId}\"");
             return post;
         }
     }

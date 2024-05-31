@@ -7,54 +7,54 @@ namespace Blog.Data.Repositories
     public class UserRepository : IUserRepository
     {
         // GetAll
-        // GetByid
+        // GetById
         // GetByUserName
         //Add
         // Update
         // Delete
 
-        private readonly BlogDbContext _DbContext;
+        private readonly BlogDbContext _dbContext;
 
         public UserRepository(BlogDbContext dbContext)
         {
-            _DbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<List<User>> GetAll()
         {
-            var users = await _DbContext.Users.ToListAsync();
+            var users = await _dbContext.Users.ToListAsync();
             return users;
         }
 
-        public async Task<User> GetById(Guid userid)
+        public async Task<User> GetById(Guid userId)
         {
-            var user = await _DbContext.Users.FirstOrDefaultAsync(u => u.id == userid);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user is null) throw new Exception("User not found ");
             return user;
         }
 
-        public async Task<User?> GetByUsername(string Username)
+        public async Task<User?> GetByUsername(string UserName)
         {
-            var user = await _DbContext.Users.FirstOrDefaultAsync(u => u.UserName == Username);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == UserName);
             return user;
         }
 
         public async Task Add(User user)
         {
-            _DbContext.Users.Add(user);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
 
         }
         public async Task Update(User user)
         {
-            _DbContext.Users.Update(user);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(User user)
         {
-            _DbContext?.Users.Remove(user);
-            await _DbContext!.SaveChangesAsync();
+            _dbContext?.Users.Remove(user);
+            await _dbContext!.SaveChangesAsync();
         }
 
 

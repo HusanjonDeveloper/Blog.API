@@ -7,52 +7,52 @@ namespace Blog.Data.Repositories
     public class BlogRepository : IBlogRepository
     {
         // GetAll
-        // GetByid
+        // GetById
         // GetByName
         //Add
         // Update
         // Delete
 
-        private readonly BlogDbContext _DbContext;
+        private readonly BlogDbContext _dbContext;
 
         public BlogRepository(BlogDbContext dbContext)
         {
-            _DbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<List<Entities.Blog>> GetAll()
         {
-            var blog = await _DbContext.Blogs.ToListAsync();
+            var blog = await _dbContext.Blogs.ToListAsync();
             return blog;
         }
 
-        public async Task<Entities.Blog> GetByid(int id)
+        public async Task<Entities.Blog> GetById(int Id)
         {
-            var blog = await _DbContext.Blogs.FirstOrDefaultAsync(b => b.Id == id);
-            if (blog is null) throw new Exception("id not found");
+            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == Id);
+            if (blog is null) throw new Exception("Id not found");
             return blog;
         }
-        public async Task<Entities.Blog?> GetByName(string name)
+        public async Task<Entities.Blog?> GetByName(string Name)
         {
-            var blog = await _DbContext.Blogs.FirstOrDefaultAsync(b => b.Name.ToLower() == name.ToLower());
+            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Name.ToLower() == Name.ToLower());
             return blog;
         }
         public async Task Add(Entities.Blog blog)
         {
-            _DbContext.Blogs.Add(blog);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Blogs.Add(blog);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(Entities.Blog blog)
         {
-            _DbContext.Update(blog);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Update(blog);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(Entities.Blog blog)
         {
-            _DbContext.Remove(blog);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Remove(blog);
+            await _dbContext.SaveChangesAsync();
         }
 
 

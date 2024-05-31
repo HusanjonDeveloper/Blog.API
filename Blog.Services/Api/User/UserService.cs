@@ -22,9 +22,9 @@ namespace Blog.Services.Api.User
         }
 
 
-        public async Task<UserDto> GetUserByid(Guid userid)
+        public async Task<UserDto> GetUserById(Guid userId)
         {
-            var user = await _userRepository.GetById(userid);
+            var user = await _userRepository.GetById(userId);
             return user.ParsToModel();
 
         }
@@ -48,20 +48,20 @@ namespace Blog.Services.Api.User
 
         public async Task<UserDto> Login(Login model)
         {
-            var user = await _userRepository.GetByUsername(model.Username);
-            if (user is null) throw new Exception("Invalid usernmae");
+            var user = await _userRepository.GetByUsername(model.UserName);
+            if (user is null) throw new Exception(message:"Invalid userName");
 
-            var result = new PasswordHasher<Data.Entities.User>().VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            var result = new PasswordHasher<Data.Entities.User>().VerifyHashedPassword(user,hashedPassword: user.PasswordHash, providedPassword:model.Password);
 
             if (result == PasswordVerificationResult.Failed)
-                throw new Exception("Invalid Password");
+                throw new Exception(message:"Invalid Password");
             return user.ParsToModel();
 
         }
 
-        public async Task<UserDto> UpdateUser(Guid userid,UpdateUserModel model)
+        public async Task<UserDto> UpdateUser(Guid userId,UpdateUserModel model)
         {
-            var user = await _userRepository.GetById(userid);
+            var user = await _userRepository.GetById(userId);
             var check = false;
 
             if(!string.IsNullOrWhiteSpace(model.FirstName))
@@ -85,17 +85,17 @@ namespace Blog.Services.Api.User
             return user.ParsToModel();
         }
 
-        public async Task<string> DeleteUser(Guid userid)
+        public async Task<string> DeleteUser(Guid userId)
         {
-            var user = await _userRepository.GetById(userid);
+            var user = await _userRepository.GetById(userId);
             await _userRepository.Delete(user);
             return "User Successful Delete";
         }
 
-        private async Task IsExist(string username)
+        private async Task IsExist(string userName)
         {
-            var user = await _userRepository.GetByUsername(username);
-            if (user is not null) throw new Exception("you cannot pick this username uo cos it is alredy taken");
+            var user = await _userRepository.GetByUsername(userName);
+            if (user is not null) throw new Exception(message:"you cannot pick this userName uo cos it is alredy taken");
         }
     }
 }

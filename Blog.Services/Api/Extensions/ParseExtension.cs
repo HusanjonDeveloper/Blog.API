@@ -9,7 +9,7 @@ namespace Blog.Services.Api.Extensions
         {
             return new UserDto()
             {
-                id = user.id,
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
@@ -21,13 +21,14 @@ namespace Blog.Services.Api.Extensions
         public static List<UserDto> ParsToModels(this List<Data.Entities.User>? users)
         {
             if (users == null || users.Count == 0) return new List<UserDto>();
-            var dtos = new List<UserDto>();
+            var parsToModels = new List<UserDto>();
+
             foreach (var user in users)
             {
 
-                dtos.Add(user.ParsToModel());
+                parsToModels.Add(user.ParsToModel());
             }
-            return dtos;
+            return parsToModels;
         }
 
         public static BlogDto ParseToModel(this Data.Entities.Blog blog)
@@ -38,14 +39,14 @@ namespace Blog.Services.Api.Extensions
 
         public static List<BlogDto> ParseModels(this List<Data.Entities.Blog>? blogs)
         {
-            var dtos = new List<BlogDto>();
+            var dos = new List<BlogDto>();
             if (blogs == null || blogs.Count == 0) return new List<BlogDto>();
             foreach (var blog in blogs)
             {
-                dtos.Add(blog.ParseToModel());
+                dos.Add(blog.ParseToModel());
             }
 
-            return dtos;
+            return dos;
         }
 
         public static PostDto ParseToModel(this Data.Entities.Post post)
@@ -56,13 +57,13 @@ namespace Blog.Services.Api.Extensions
 
         public static List<PostDto> ParseModels(this List<Data.Entities.Post>? posts)
         {
-            var dtos = new List<PostDto>();
+            var dos = new List<PostDto>();
             if (posts == null || posts.Count == 0) return new List<PostDto>();
             foreach (var post in posts)
             {
-                dtos.Add(post.ParseToModel());
+                dos.Add(post.ParseToModel());
             }
-            return dtos;
+            return dos;
         }
     }
 }

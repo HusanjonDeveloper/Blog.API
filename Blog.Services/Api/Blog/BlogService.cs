@@ -17,37 +17,37 @@ namespace Blog.Services.Api.Blog
         }
 
 
-        public async Task<List<BlogDto>> GetAllNorRelatedBlogs(Guid userid)
+        public async Task<List<BlogDto>> GetAllNorRelatedBlogs(Guid userId)
         {
-            await CheckUser(userid);
+            await CheckUser(userId);
             var blogs = await _blogRepository.GetAll();
             return blogs.ParseModels();
         }
 
-        public async Task<BlogDto> GetNotRelatedBlogById(Guid userid, int blogid)
+        public async Task<BlogDto> GetNotRelatedBlogById(Guid userId, int blogId)
         {
-            await CheckUser(userid);
-            var blogs = await _blogRepository.GetByid(blogid);
+            await CheckUser(userId);
+            var blogs = await _blogRepository.GetById(blogId);
             return blogs.ParseToModel();
         }
 
-        public async Task<List<BlogDto>> GetAllUserBlogs(Guid userid)
+        public async Task<List<BlogDto>> GetAllUserBlogs(Guid userId)
         {
-            await CheckUser(userid);    
+            await CheckUser(userId);    
             var blogs = await _blogRepository.GetAll();
-            var relatedBlogs = blogs?.Where(x => x.Userid == userid).ToList();
+            var relatedBlogs = blogs?.Where(x => x.UserId == userId).ToList();
             return relatedBlogs.ParseModels();
         }
 
-        public async Task<BlogDto> GetRelatedBlogById(Guid userid, int blogid)
+        public async Task<BlogDto> GetRelatedBlogById(Guid userId, int blogId)
         {
-            var blog = await GetBlogById(userid, blogid);
+            var blog = await GetBlogById(userId, blogId);
             return blog.ParseToModel();
         }
 
-        public async Task<BlogDto> AddBlog(Guid userid, CreateBlogModel model)
+        public async Task<BlogDto> AddBlog(Guid userId, CreateBlogModel? model)
         {
-            await CheckUser(userid);
+            await CheckUser(userId);
 
             await IsExist(model.Name);
 
@@ -55,7 +55,7 @@ namespace Blog.Services.Api.Blog
             {
                 Name = model.Name,
                 Description = model.Description,
-                Userid = userid,
+                UserId = userId,
             };
             await _blogRepository.Add(blog);
             return blog.ParseToModel();
@@ -84,24 +84,24 @@ namespace Blog.Services.Api.Blog
             return blog.ParseToModel();
         }
 
-        public async Task<string> DeleteBlog(Guid userid, int blogid)
+        public async Task<string> DeleteBlog(Guid userId, int blogId)
         {
-            var blog = await GetBlogById(userid, blogid);
+            var blog = await GetBlogById(userId, blogId);
             await _blogRepository.Delete(blog);
             return "Deleted successfully";
         }
 
 
 
-        private async Task<Data.Entities.User> CheckUser(Guid userid)
+        private async Task<Data.Entities.User> CheckUser(Guid userId)
         {
-            var  user = await _userRepository.GetById(userid);
+            var  user = await _userRepository.GetById(userId);
             return user;
         }
-        private async Task IsExist(string name)
+        private async Task IsExist(string Name)
         {
-            var blog = await _blogRepository.GetByName(name);
-            if (blog is not null) throw new Exception($"This name \"{name}\" is already exist ");
+            var blog = await _blogRepository.GetByName(Name);
+            if (blog is not null) throw new Exception($"This Name \"{Name}\" is already exist ");
         }
         private async Task<Data.Entities.Blog> GetBlogById(Guid userId, int blogId)
         {

@@ -13,7 +13,7 @@ namespace Blog.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=LAPTOP-1FG38VDK;Database=newDbContext; Integrated Security=true;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(connectionString:"Server=LAPTOP-1FG38VDK;Database=newDbContext; Integrated Security=true;TrustServerCertificate=True;");
         }
 
     }

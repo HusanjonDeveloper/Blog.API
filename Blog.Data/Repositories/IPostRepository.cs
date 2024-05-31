@@ -5,12 +5,12 @@ namespace Blog.Data.Repositories
     public interface IPostRepository
     {
         // GetAll
-        // GetByid
+        // GetById
         //Add
         // Update
         // Delete
         Task<List<Post>> GetAll();
-        Task<Post> GetById(int userid);
+        Task<Post> GetById(int userId);
         Task Add(Post post);
         Task Update(Post post);
         Task Delete(Post post);

@@ -7,44 +7,44 @@ namespace Blog.Data.Repositories
     public class PostRepository : IPostRepository
     {
         // GetAll
-        // GetByid
+        // GetById
         //Add
         // Update
         // Delete
 
-        private readonly BlogDbContext _DbContext;
+        private readonly BlogDbContext _dbContext;
 
         public PostRepository(BlogDbContext dbContext)
         {
-            _DbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<List<Post>> GetAll()
         {
-            var post = await _DbContext.Posts.ToListAsync();
+            var post = await _dbContext.Posts.ToListAsync();
             return post;
         }
-        public async Task<Post> GetById(int id)
+        public async Task<Post> GetById(int userId)
         {
-            var post = await _DbContext.Posts.FirstOrDefaultAsync(p => p.id == id);
+            var post = await _dbContext.Posts.FirstOrDefaultAsync(p => p.Id == userId);
             if (post is null) throw new Exception("user not found");
             return post;
         }
         public async Task Add(Post post)
         {
-            _DbContext.Posts.Add(post);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Posts.Add(post);
+            await _dbContext.SaveChangesAsync();
         }
         public async Task Update(Post post)
         {
-            _DbContext.Posts.Update(post);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Posts.Update(post);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(Post post)
         {
-            _DbContext.Remove(post);
-            await _DbContext.SaveChangesAsync();
+            _dbContext.Remove(post);
+            await _dbContext.SaveChangesAsync();
         }
 
 

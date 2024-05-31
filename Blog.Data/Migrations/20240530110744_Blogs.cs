@@ -126,7 +126,7 @@ namespace Blog.Data.Migrations
                 .Annotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "Userid",
+                name: "UserId",
                 table: "Blogs",
                 type: "uniqueidentifier",
                 nullable: false,
@@ -285,7 +285,7 @@ namespace Blog.Data.Migrations
                 .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "Userid",
+                name: "UserId",
                 table: "Blogs",
                 type: "uuid",
                 nullable: false,

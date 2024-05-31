@@ -78,7 +78,7 @@ namespace Blog.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Blogs_Userid",
                 table: "Blogs",
-                column: "Userid");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_Blogid",

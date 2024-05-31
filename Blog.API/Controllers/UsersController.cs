@@ -26,7 +26,7 @@ namespace Blog.API.Controllers
         [HttpGet("{userid:guid}")]
         public async Task<IActionResult> GetUsersById(Guid userid)
         {
-            var user = await _userService.GetUserByid(userid);
+            var user = await _userService.GetUserById(userid);
             return Ok(user);
         }
     }
