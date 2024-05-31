@@ -9,10 +9,10 @@ namespace Blog.Data.Repositories
         //Add
         // Update
         // Delete
-        Task<List<Post>> GetAll();
-        Task<Post> GetById(int userId);
-        Task Add(Post post);
-        Task Update(Post post);
-        Task Delete(Post post);
+        public Task<List<Post>?> GetAll();
+        public Task<Post> GetById(int id);
+        public Task Add(Post post);
+        public Task Update(Post post);
+        public Task DeleteById(Post post);
     }
 }

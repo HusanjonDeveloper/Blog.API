@@ -1,9 +1,10 @@
 ﻿using Blog.Common.Dtos;
 using Blog.Common.Models.Blog;
+using Blog.Data.Entities;
 using Blog.Data.Repositories;
 using Blog.Services.Api.Extensions;
 
-namespace Blog.Services.Api.Blog
+namespace Blog.Services.Api
 {
     public class BlogService
     {
@@ -16,7 +17,7 @@ namespace Blog.Services.Api.Blog
             _userRepository = userRepository;
         }
 
-
+        //These methods for not related blogs
         public async Task<List<BlogDto>> GetAllNorRelatedBlogs(Guid userId)
         {
             await CheckUser(userId);
@@ -27,15 +28,16 @@ namespace Blog.Services.Api.Blog
         public async Task<BlogDto> GetNotRelatedBlogById(Guid userId, int blogId)
         {
             await CheckUser(userId);
-            var blogs = await _blogRepository.GetById(blogId);
-            return blogs.ParseToModel();
+            var blog = await _blogRepository.GetById(blogId);
+            return blog.ParseToModel();
         }
 
+        //These methods for  related to user,  blogs
         public async Task<List<BlogDto>> GetAllUserBlogs(Guid userId)
         {
-            await CheckUser(userId);    
+            await CheckUser(userId);
             var blogs = await _blogRepository.GetAll();
-            var relatedBlogs = blogs?.Where(x => x.UserId == userId).ToList();
+            var relatedBlogs = blogs?.Where(b => b.UserId == userId).ToList();
             return relatedBlogs.ParseModels();
         }
 
@@ -45,7 +47,7 @@ namespace Blog.Services.Api.Blog
             return blog.ParseToModel();
         }
 
-        public async Task<BlogDto> AddBlog(Guid userId, CreateBlogModel? model)
+        public async Task<BlogDto> AddBlog(Guid userId, CreateBlogModel model)
         {
             await CheckUser(userId);
 
@@ -55,16 +57,17 @@ namespace Blog.Services.Api.Blog
             {
                 Name = model.Name,
                 Description = model.Description,
-                UserId = userId,
+                UserId = userId
             };
             await _blogRepository.Add(blog);
             return blog.ParseToModel();
-
         }
 
         public async Task<BlogDto> UpdateBlog(Guid userId, int blogId, UpdateBlogModel model)
         {
+
             var blog = await GetBlogById(userId, blogId);
+
             var check = false;
 
             if (!string.IsNullOrWhiteSpace(model.Name))
@@ -87,22 +90,24 @@ namespace Blog.Services.Api.Blog
         public async Task<string> DeleteBlog(Guid userId, int blogId)
         {
             var blog = await GetBlogById(userId, blogId);
+
             await _blogRepository.Delete(blog);
             return "Deleted successfully";
         }
 
 
-
-        private async Task<Data.Entities.User> CheckUser(Guid userId)
+        private async Task<User> CheckUser(Guid userId)
         {
-            var  user = await _userRepository.GetById(userId);
+            var user = await _userRepository.GetById(userId);
             return user;
         }
-        private async Task IsExist(string Name)
+
+        private async Task IsExist(string name)
         {
-            var blog = await _blogRepository.GetByName(Name);
-            if (blog is not null) throw new Exception($"This Name \"{Name}\" is already exist ");
+            var blog = await _blogRepository.GetByName(name);
+            if (blog is not null) throw new Exception($"This name \"{name}\" is already exist ");
         }
+
         private async Task<Data.Entities.Blog> GetBlogById(Guid userId, int blogId)
         {
             var user = await CheckUser(userId);
@@ -110,6 +115,7 @@ namespace Blog.Services.Api.Blog
             if (blog is null) throw new Exception($"Invalid blogId \"{blogId}\"");
             return blog;
         }
+
 
     }
 }

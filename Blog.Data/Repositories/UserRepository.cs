@@ -13,50 +13,49 @@ namespace Blog.Data.Repositories
         // Update
         // Delete
 
-        private readonly BlogDbContext _dbContext;
+        private readonly BlogDbContext _context;
 
-        public UserRepository(BlogDbContext dbContext)
+        public UserRepository(BlogDbContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
-        public async Task<List<User>> GetAll()
+        public async Task<List<User>?> GetAll()
         {
-            var users = await _dbContext.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
             return users;
         }
 
-        public async Task<User> GetById(Guid userId)
+        public async Task<User> GetById(Guid id)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            if (user is null) throw new Exception("User not found ");
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user is null) throw new Exception("User not found");
             return user;
         }
 
-        public async Task<User?> GetByUsername(string UserName)
+        public async Task<User?> GetByUsername(string username)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username.ToLower());
             return user;
         }
 
         public async Task Add(User user)
         {
-            _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
-
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
         }
+
         public async Task Update(User user)
         {
-            _dbContext.Users.Update(user);
-            await _dbContext.SaveChangesAsync();
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(User user)
         {
-            _dbContext?.Users.Remove(user);
-            await _dbContext!.SaveChangesAsync();
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
-
 
     }
 }

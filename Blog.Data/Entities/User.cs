@@ -7,16 +7,19 @@ namespace Blog.Data.Entities
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
         [Required]
-        public string LastName { get; set; }
+        public string Lastname { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required]
         public string PasswordHash { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
         public string? PhotoUrl { get; set; }
+        [Required]
+
+        public string Role { get; set; }
+
         public virtual List<Blog>? Blogs { get; set; }
     }
 }

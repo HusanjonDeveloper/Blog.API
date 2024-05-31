@@ -9,12 +9,14 @@ namespace Blog.Data.Entities
         [Required]
         public string Name { get; set; }
         [Required]
-        public string? Description { get; set; }
-        [Required]
+        public string Description { get; set; }
+
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
 
         public Guid UserId { get; set; }
         public virtual User? User { get; set; }
+
         public virtual List<Post>? Posts { get; set; }
     }
 }

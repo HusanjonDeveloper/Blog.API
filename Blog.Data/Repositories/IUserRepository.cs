@@ -11,12 +11,12 @@ namespace Blog.Data.Repositories
         // Update
         // Delete
 
-        Task<List<User>> GetAll();
-        Task<User> GetById(Guid userId);
-        Task<User?> GetByUsername(string UserName);
-        Task Add(User user);
-        Task Update(User user);
-        Task Delete(User user);
+        public Task<List<User>?> GetAll();
+        public Task<User> GetById(Guid id);
+        public Task<User?> GetByUsername(string username);
+        public Task Add(User user);
+        public Task Update(User user);
+        public Task Delete(User user);
 
     }
 }

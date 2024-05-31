@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Common.Models.User
 {
     public class CreateUserModel
     {
         [Required]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
         [Required]
-        public string LastName { get; set; }
+        public string Lastname { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
+
         [Required]
         public string Password { get; set; }
         [Required]
         [Compare(nameof(Password))]
-        public string? ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

@@ -10,9 +10,9 @@ namespace Blog.Services.Api.Extensions
             return new UserDto()
             {
                 Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
+                FirstName = user.Firstname,
+                LastName = user.Lastname,
+                UserName = user.Username,
                 CreatedAt = user.CreatedAt,
                 PhotoUrl = user.PhotoUrl
             };

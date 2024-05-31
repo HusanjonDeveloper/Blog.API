@@ -13,6 +13,7 @@ namespace Blog.Data.Repositories
         // Update
         // Delete
 
+
         private readonly BlogDbContext _dbContext;
 
         public BlogRepository(BlogDbContext dbContext)
@@ -20,23 +21,25 @@ namespace Blog.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Entities.Blog>> GetAll()
+        public async Task<List<Entities.Blog>?> GetAll()
         {
-            var blog = await _dbContext.Blogs.ToListAsync();
+            var blogs = await _dbContext.Blogs.ToListAsync();
+            return blogs;
+        }
+
+        public async Task<Entities.Blog> GetById(int id)
+        {
+            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == id);
+            if (blog is null) throw new Exception("Blog Not Found");
             return blog;
         }
 
-        public async Task<Entities.Blog> GetById(int Id)
+        public async Task<Entities.Blog?> GetByName(string name)
         {
-            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == Id);
-            if (blog is null) throw new Exception("Id not found");
+            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Name.ToLower() == name.ToLower());
             return blog;
         }
-        public async Task<Entities.Blog?> GetByName(string Name)
-        {
-            var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Name.ToLower() == Name.ToLower());
-            return blog;
-        }
+
         public async Task Add(Entities.Blog blog)
         {
             _dbContext.Blogs.Add(blog);
@@ -45,13 +48,13 @@ namespace Blog.Data.Repositories
 
         public async Task Update(Entities.Blog blog)
         {
-            _dbContext.Update(blog);
+            _dbContext.Blogs.Update(blog);
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(Entities.Blog blog)
         {
-            _dbContext.Remove(blog);
+            _dbContext.Blogs.Remove(blog);
             await _dbContext.SaveChangesAsync();
         }
 

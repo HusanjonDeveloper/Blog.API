@@ -19,31 +19,30 @@ namespace Blog.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Post>> GetAll()
+        public async Task<List<Post>?> GetAll() => await _dbContext.Posts.ToListAsync();
+
+        public async Task<Post> GetById(int id)
         {
-            var post = await _dbContext.Posts.ToListAsync();
+            var post = await _dbContext.Posts.FirstOrDefaultAsync(p => p.Id == id);
+            if (post is null) throw new Exception("Post Not Found");
             return post;
         }
-        public async Task<Post> GetById(int userId)
-        {
-            var post = await _dbContext.Posts.FirstOrDefaultAsync(p => p.Id == userId);
-            if (post is null) throw new Exception("user not found");
-            return post;
-        }
+
         public async Task Add(Post post)
         {
             _dbContext.Posts.Add(post);
             await _dbContext.SaveChangesAsync();
         }
+
         public async Task Update(Post post)
         {
             _dbContext.Posts.Update(post);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Post post)
+        public async Task DeleteById(Post post)
         {
-            _dbContext.Remove(post);
+            _dbContext.Posts.Remove(post);
             await _dbContext.SaveChangesAsync();
         }
 
