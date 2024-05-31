@@ -1,7 +1,6 @@
 using Blog.Data.Context;
 using Blog.Data.Repositories;
 using Blog.Services.Api;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
