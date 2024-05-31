@@ -23,38 +23,38 @@ namespace Blog.Services.Api.Post
             var allPosts = await _postRepository.GetAll();
             return allPosts.ParseModels();
         }
-        public async Task<PostDto> GetPostById(int postid)
+        public async Task<PostDto> GetPostById(int postId)
         {
             var posts = await _postRepository.GetAll();
-            var post = posts.FirstOrDefault(x => x.id == postid);
-            if (post is null) throw new Exception($"The post is not found with \"{postid}\"");
+            var post = posts.FirstOrDefault(x => x.id == postId);
+            if (post is null) throw new Exception($"The post is not found with \"{postId}\"");
             return post.ParseToModel();
 
         }
 
-        public async Task<List<PostDto>> GetAllPosts(Guid userid, int blogid)
+        public async Task<List<PostDto>> GetAllPosts(Guid userId, int blogId)
         {
-            var posts = await FilteredPosts(userid, blogid);
+            var posts = await FilteredPosts(userId, blogId);
             return posts.ParseModels();
         }
 
-        public async Task<PostDto> GetPostById(Guid userid, int blogid, int postid)
+        public async Task<PostDto> GetPostById(Guid userId, int blogId, int postId)
         {
-            var posts = await CheckPost(userid, blogid, postid);
+            var posts = await CheckPost(userId, blogId, postId);
             return posts.ParseToModel();
         }
 
-        public async Task<PostDto> AddPost(Guid userid, int blogid, CreatePostModel model)
+        public async Task<PostDto> AddPost(Guid userId, int blogId, CreatePostModel model)
         {
-            var user = CheckUser(userid);
-            await CheckBlog(userid,blogid);
+            var user = await  CheckUser(userId);
+            await CheckBlog(userId,blogId);
 
             var post = new Data.Entities.Post()
             {
                Title = model.Title,
                Content = model.Content,
-               AuthorFullName = $"{user} {user}", // ustozdan soreman 
-               Blogid = blogid,
+               AuthorFullName = $"{user.FirstName} {user.LastName}", 
+               Blogid = blogId,
             };
 
             await _postRepository.Add(post);
@@ -62,9 +62,9 @@ namespace Blog.Services.Api.Post
         }
 
 
-        public async Task<PostDto> UpdatePost(Guid userid, int blogid, int postid, UpdatePostModel model)
+        public async Task<PostDto> UpdatePost(Guid userId, int blogId, int postId, UpdatePostModel model)
         {
-            var post = await CheckPost(userid,blogid,postid);
+            var post = await CheckPost(userId,blogId,postId);
             var check = false;
             
             if(!string.IsNullOrWhiteSpace(model.Title))
@@ -82,17 +82,17 @@ namespace Blog.Services.Api.Post
             return post.ParseToModel();
         }
 
-        public async Task<string> DeletePost(Guid userid, int blogid, int postid)
+        public async Task<string> DeletePost(Guid userId, int blogId, int postId)
         {
-            var post = await CheckPost(userid,blogid,postid);
+            var post = await CheckPost(userId,blogId,postId);
             await _postRepository.Delete(post);
             return "Deleted successfully";
         }
 
-        private async Task<List<Data.Entities.Post>?> FilteredPosts(Guid userid, int blogid)
+        private async Task<List<Data.Entities.Post>?> FilteredPosts(Guid userId, int blogId)
         {
-            var blog = await CheckBlog(userid, blogid);
-            var filteredPosts = blog.Posts?.Where(post => post.id == blogid).ToList();
+            var blog = await CheckBlog(userId, blogId);
+            var filteredPosts = blog.Posts?.Where(post => post.id == blogId).ToList();
             return filteredPosts;
         }
 
@@ -102,19 +102,19 @@ namespace Blog.Services.Api.Post
             return user;
         }
 
-        private async Task<Data.Entities.Blog> CheckBlog(Guid userid, int blogid)
+        private async Task<Data.Entities.Blog> CheckBlog(Guid userId, int blogId)
         {
-            var user = await CheckUser(userid);
-            var blog = user.Blogs?.FirstOrDefault(blog => blog.Id == blogid);
-            if (blog is null) throw new Exception($"Not found blog with \"{blogid}\"");
+            var user = await CheckUser(userId);
+            var blog = user.Blogs.FirstOrDefault(blog => blog.Id == blogId);
+            if (blog is null) throw new Exception($"Not found blog with \"{blogId}\"");
             return blog;
         }
 
-        private async Task<Data.Entities.Post> CheckPost(Guid userid, int blogid, int postid)
+        private async Task<Data.Entities.Post> CheckPost(Guid userId, int blogId, int postId)
         {
-            var blog = await CheckBlog(userid, blogid);
-            var post = blog.Posts?.FirstOrDefault(p => p.id == postid);
-            if (post is null) throw new Exception($"The post is not found with \"{postid}\"");
+            var blog = await CheckBlog(userId, blogId);
+            var post = blog.Posts?.FirstOrDefault(p => p.id == postId);
+            if (post is null) throw new Exception($"The post is not found with \"{postId}\"");
             return post;
         }
     }
