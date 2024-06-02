@@ -18,7 +18,7 @@ namespace Blog.Services.Api
         }
 
         //These methods for not related blogs
-        public async Task<List<BlogDto>> GetAllNorRelatedBlogs(Guid userId)
+        public async Task<List<BlogDto>> GetAllNotReletedBlogs(Guid userId)
         {
             await CheckUser(userId);
             var blogs = await _blogRepository.GetAll();

@@ -45,7 +45,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPost("{AddUsers}")]
+        [HttpPost("{AddUser}")]
         public async Task<IActionResult> AddUsers([FromBody]CreateUserModel model)
         {
             try
