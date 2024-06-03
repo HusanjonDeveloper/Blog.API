@@ -30,7 +30,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpGet("{postId:int}")]
-        public async Task<IActionResult> GetallUserPostsById(Guid userId, int blogId, int postId)
+        public async Task<IActionResult> GetAllUserPostsById(Guid userId, int blogId, int postId)
         {
             try
             {
