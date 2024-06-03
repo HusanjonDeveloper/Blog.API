@@ -9,6 +9,6 @@
         public DateTime CreatedAt { get; set; }
         public string? PhotoUrl { get; set; }
 
-        public List<BlogDto>? Blogs { get; set; }
+        public virtual List<BlogDto>? Blogs { get; set; }
     }
 }

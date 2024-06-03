@@ -1,4 +1,6 @@
-﻿namespace Blog.Common.Dtos
+﻿using Blog.Data.Entities;
+
+namespace Blog.Common.Dtos
 {
     public class BlogDto
     {
@@ -8,7 +10,8 @@
 
         public Guid UserId { get; set; }
         public DateTime CreatedDate { get; set; }
+        public virtual User? User { get; set; }
 
-        public List<PostDto>? Posts { get; set; }
+        public virtual List<PostDto>? Posts { get; set; }
     }
 }

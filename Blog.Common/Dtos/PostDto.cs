@@ -11,5 +11,6 @@
 
         public string AuthorFullName { get; set; }
         public int BlogId { get; set; }
+        public virtual Data.Entities.Blog? Blog { get; set; }
     }
 }

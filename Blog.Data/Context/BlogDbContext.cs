@@ -1,5 +1,4 @@
-﻿using Blog.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Context
 {
@@ -13,6 +12,8 @@ namespace Blog.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=LAPTOP-1FG38VDK;Database=newContext;Integrated Security=true;TrustServerCertificate=True;");
+
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         public DbSet<Data.Entities.User> Users { get; set; }
