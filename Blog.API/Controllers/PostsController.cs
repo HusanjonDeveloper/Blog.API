@@ -15,6 +15,34 @@ namespace Blog.API.Controllers
             _postService = postService;
         }
 
+        [HttpGet("/api/posts")]
+        public async Task<IActionResult> GetAllPosts()
+        {
+            try
+            {
+                var post = await _postService.GetAllPosts();
+                return Ok(post);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("/api/posts.{postId:int}")]
+        public async Task<IActionResult> GetPostById(int postId)
+        {
+            try
+            {
+                var post = await _postService.GetPostById(postId);
+                return Ok(post);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllUserPosts(Guid userId, int blogId)
         {
