@@ -12,10 +12,12 @@ namespace Blog.Services.Api
     public class UserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly JwtTokenService _jwtTokenService;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, JwtTokenService jwtTokenService)
         {
             _userRepository = userRepository;
+            _jwtTokenService = jwtTokenService;
         }
 
         public async Task<List<UserDto>> GetAllUsers()
@@ -32,13 +34,13 @@ namespace Blog.Services.Api
 
         public async Task<UserDto> AddUser(CreateUserModel model)
         {
-            await IsExist(model.Username);
+            await IsExist(model.Username!);
 
             var user = new User()
             {
-                Firstname = model.Firstname,
-                Lastname = model.Lastname,
-                Username = model.Username.ToLower()
+                Firstname = model.Firstname!,
+                Lastname = model.Lastname!,
+                Username = model.Username!.ToLower()
             };
 
             var passwordHash = new PasswordHasher<User>().HashPassword(user, model.Password);
@@ -55,7 +57,8 @@ namespace Blog.Services.Api
             var result = new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, model.Password);
             if (result == PasswordVerificationResult.Failed)
                 throw new Exception("Password failed");
-            return result.ToString();   
+            var token = _jwtTokenService.GenerateToken(user);
+            return token;
         }
 
         public async Task<UserDto> UpdateUser(Guid userId, UpdateUserModel model)

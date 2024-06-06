@@ -1,5 +1,7 @@
 ﻿using Blog.Common.Models.User;
 using Blog.Services.Api;
+using Blog.Services.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers
@@ -9,13 +11,16 @@ namespace Blog.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly UserHelper _userHelper;
 
-        public UsersController(UserService userService)
+        public UsersController(UserService userService, UserHelper userHelper)
         {
             _userService = userService;
+            _userHelper = userHelper;
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -45,7 +50,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPost("{AddUser}")]
+        [HttpPost("/Add")]
         public async Task<IActionResult> AddUsers([FromBody]CreateUserModel model)
         {
             try
@@ -59,7 +64,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPost("{Login}")]
+        [HttpPost("/Login")]
         public async Task<IActionResult> Login([FromBody]LoginUserModel model)
         {
             try
@@ -73,7 +78,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPut("{usersid:guid}")]
+        [HttpPut("{usersId:guid}")]
         public async Task<IActionResult> UpdataUser(Guid userId, [FromBody] UpdateUserModel model)
         {
             try
@@ -87,7 +92,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpDelete("{Users:guid}")]
+        [HttpDelete("/Delete")]
 
         public async Task<IActionResult> DeleteUser(Guid userid)
         {
