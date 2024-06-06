@@ -1,11 +1,9 @@
-﻿using System.Data.Common;
-using Blog.Common.Dtos;
+﻿using Blog.Common.Dtos;
 using Blog.Common.Models.User;
 using Blog.Data.Entities;
 using Blog.Data.Repositories;
 using Blog.Services.Api.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Blog.Services.Api
 {
@@ -51,10 +49,10 @@ namespace Blog.Services.Api
 
         public async Task<string> Login(LoginUserModel model)
         {
-            var user = await _userRepository.GetByUsername(model.UserName);
+            var user = await _userRepository.GetByUsername(model.UserName!);
             if (user == null) throw new Exception("Invalid Username");
 
-            var result = new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            var result = new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, model.Password!);
             if (result == PasswordVerificationResult.Failed)
                 throw new Exception("Password failed");
             var token = _jwtTokenService.GenerateToken(user);

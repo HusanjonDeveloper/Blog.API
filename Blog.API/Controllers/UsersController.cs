@@ -36,7 +36,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpGet("{userId:guid}")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetUserById(Guid userId)
         {
             try
@@ -50,13 +50,13 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPost("/Add")]
-        public async Task<IActionResult> AddUsers([FromBody]CreateUserModel model)
+        [HttpPost("/AddUser")]
+        public async Task<IActionResult> Register([FromBody] CreateUserModel model)
         {
             try
             {
                 var user = await _userService.AddUser(model);
-                return Ok(user);    
+                return Ok(user);
             }
             catch (Exception e)
             {
@@ -65,6 +65,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpPost("/Login")]
+
         public async Task<IActionResult> Login([FromBody]LoginUserModel model)
         {
             try
@@ -79,6 +80,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpPut("{usersId:guid}")]
+        [Authorize]
         public async Task<IActionResult> UpdataUser(Guid userId, [FromBody] UpdateUserModel model)
         {
             try
@@ -93,6 +95,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpDelete("/Delete")]
+        [Authorize]
 
         public async Task<IActionResult> DeleteUser(Guid userid)
         {

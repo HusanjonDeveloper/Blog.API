@@ -1,5 +1,6 @@
 ﻿using Blog.Common.Models.Post;
 using Blog.Services.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers
@@ -29,7 +30,8 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpGet("/api/posts.{postId:int}")]
+        [HttpGet("/api/posts/{postId:int}")]
+        [Authorize]
         public async Task<IActionResult> GetPostById(int postId)
         {
             try
@@ -71,7 +73,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPost("{AddPost}")]
+        [HttpPost]
         public async Task<IActionResult> AddUserPost(Guid userId, int blogId, [FromBody] CreatePostModel model)
         {
             try
@@ -85,7 +87,8 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPut("{UpdatePost:int}")]
+
+        [HttpPut("{postId:int}")]
         public async Task<IActionResult> UpdatePost(Guid userId, int blogId, int postId,
             [FromBody] UpdatePostModel model)
         {
@@ -100,7 +103,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpDelete("{deletePost}")]
+       [HttpDelete("{postId:int}")]
         public async Task<IActionResult> DeletePost(Guid userId, int blogId, int postId)
         {
             try

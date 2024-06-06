@@ -15,10 +15,10 @@ namespace Blog.API.Controllers
         {
             _blogService = blogService;
         }
+        
         // This Not Releted Blogs
-        [HttpGet("not-releted-blog")]
-
-        public async Task<IActionResult>  GetAllNotReletedBlogs(Guid userId)
+        [HttpGet("not-related-blogs")]
+        public async Task<IActionResult>  GetAllNotRelatedBlogs(Guid userId)
         {
             try
             {
@@ -31,8 +31,8 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpGet("not-releted-blog/{blogId:int}")]
-        public async Task<IActionResult> GetAllNotReletedBlogById(Guid userId, int blogId)
+        [HttpGet("not-related-blogs/{blogId:int}")]
+        public async Task<IActionResult> GetAllNotRelatedBlogById(Guid userId, int blogId)
         {
             try
             {
@@ -46,8 +46,7 @@ namespace Blog.API.Controllers
         }
 
         // This Releted Blogs
-
-        [HttpGet("")]
+        [HttpGet]
         public async Task<IActionResult> GetAllUsersBlogs(Guid userId)
         {
             try
@@ -62,7 +61,7 @@ namespace Blog.API.Controllers
 
         }
 
-        [HttpGet("{blogId:guid}")]
+        [HttpGet("{blogId:int}")]
         public async Task<IActionResult> GetUserBlogById(Guid userId, int blogId)
         {
             try
@@ -76,8 +75,8 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPost("{AddBlog}")]
-
+        
+        [HttpPost("/AddBlog")]
         public async Task<IActionResult> AddUserBlog(Guid userId,[FromBody] CreateBlogModel model)
         {
             try
@@ -91,7 +90,7 @@ namespace Blog.API.Controllers
             }
         }
 
-        [HttpPut("BlogId:int{UpdateBlog}")]
+        [HttpPut("{blogId:int}")]
         public async Task<IActionResult> UpdateUserBlog(Guid userId, int blogId, UpdateBlogModel model)
         {
             try

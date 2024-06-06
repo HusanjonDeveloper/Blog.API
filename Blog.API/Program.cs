@@ -37,13 +37,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddDbContext<BlogDbContext>();
 
 /*options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString(name:"BlogDbContext"));
 });*/
 
+builder.Services.AddDbContext<BlogDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -83,7 +83,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("MyCours");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
