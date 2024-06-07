@@ -13,6 +13,6 @@ public class UserHelper
     }
     
     public Guid UserId => Guid.Parse(_accessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-    public string Username => _accessor.HttpContext!.User.FindFirstValue(ClaimTypes.Name)!;
+    public string Username  => _accessor.HttpContext!.User.FindFirstValue(ClaimTypes.Name)!;
 
 }
