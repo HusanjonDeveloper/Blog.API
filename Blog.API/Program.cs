@@ -52,6 +52,12 @@ void ConfigureServices(IServiceCollection services)
     });
     services.AddMvcCore();
 }
+void  Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseAuthentication(); // Authentication middleware
+    app.UseAuthorization(); // Authorization middleware
+    app.UseMvc();
+}
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -59,13 +65,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-void  Configure(IApplicationBuilder app, IWebHostEnvironment env)
+app.UseCors(options =>
 {
-    app.UseAuthentication(); // Authentication middleware
-    app.UseAuthorization(); // Authorization middleware
-    app.UseMvc();
-}
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+});
 
+app.UseHttpsRedirection();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
