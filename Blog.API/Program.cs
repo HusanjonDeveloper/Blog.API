@@ -2,6 +2,7 @@ using Blog.Common.Models.JwtOptions;
 using Blog.Data.Context;
 using Blog.Data.Repositories;
 using Blog.Services.Api;
+using Blog.Services.Api.Extensions;
 using Blog.Services.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer" , new OpenApiSecurityScheme()
@@ -37,50 +39,31 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddServices(builder);
 
-/*options =>
+void ConfigureServices(IServiceCollection services)
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(name:"BlogDbContext"));
-});*/
-
-builder.Services.AddDbContext<BlogDbContext>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<BlogService>();
-builder.Services.AddScoped<PostService>();
-builder.Services.AddScoped<JwtTokenService>();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<UserHelper>();
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    var jwt = builder.Configuration.GetSection(nameof(JwtOption)).Get<JwtOption>();
-    var signinKey = System.Text.Encoding.UTF32.GetBytes(jwt!.signinKey);
-    
- options.TokenValidationParameters = new TokenValidationParameters()
- {
-     ValidIssuer = jwt!.Issuer,
-     ValidAudience = jwt.Audience,
-     ValidateIssuer = true,
-     ValidateAudience = true,
-     IssuerSigningKey = new SymmetricSecurityKey(signinKey),
-     ValidateIssuerSigningKey =  true,
-     ValidateLifetime = true,
-     ClockSkew = TimeSpan.Zero,
-     
- };
-});
-
-
-
+   services.AddAuthorization(options =>
+    {
+        options.AddPolicy("OnlyAdmin", policy =>
+        {
+            policy.RequireRole("Admin");
+        });
+    });
+    services.AddMvcCore();
+}
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+void  Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseAuthentication(); // Authentication middleware
+    app.UseAuthorization(); // Authorization middleware
+    app.UseMvc();
 }
 
 app.UseHttpsRedirection();

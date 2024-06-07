@@ -1,5 +1,6 @@
 ﻿using Blog.Common.Dtos;
 using Blog.Common.Models.User;
+using Blog.Common.Statics;
 using Blog.Data.Entities;
 using Blog.Data.Repositories;
 using Blog.Services.Api.Extensions;
@@ -38,7 +39,8 @@ namespace Blog.Services.Api
             {
                 Firstname = model.Firstname!,
                 Lastname = model.Lastname!,
-                Username = model.Username!.ToLower()
+                Username = model.Username!,
+                Role = ConsString.UserRole
             };
 
             var passwordHash = new PasswordHasher<User>().HashPassword(user, model.Password);
