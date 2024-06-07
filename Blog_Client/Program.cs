@@ -1,4 +1,4 @@
-using Blog_Client;
+using Blog_Client.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
