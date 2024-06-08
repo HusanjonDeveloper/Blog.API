@@ -15,4 +15,14 @@
     <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Shared\App.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Shared\_Imports.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Shared\App.razor" />
+    <AdditionalFiles Include="Shared\_Imports.razor" />
+  </ItemGroup>
+
 </Project>

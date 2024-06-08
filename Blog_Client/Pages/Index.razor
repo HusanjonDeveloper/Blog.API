@@ -1,34 +1,5 @@
 ﻿@page "/"
-@using Blog.Common.Dtos
-@using Blog.Data.Entities
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
-@if (_users != null || _users?.Count != 0)
-{
-    <table style="width:100%">
-        <tr>
-            <th>UserId</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>UserName</th>
-        </tr>
-        
-        @foreach (var user in _users)
-        {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.FirstName</td>
-                <td>@user.LastName</td>
-                <td>@user.UserName</td>
-            </tr>
-        }
-
-    </table>       
-}
-
-@code
-{
-  
-}
