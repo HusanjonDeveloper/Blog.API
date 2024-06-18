@@ -9,7 +9,7 @@ namespace Blog.API.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        private readonly  PostService _postService;
+        private readonly PostService _postService;
 
         public PostsController(PostService postService)
         {
@@ -51,7 +51,7 @@ namespace Blog.API.Controllers
             try
             {
                 var post = await _postService.GetAllPosts(userId, blogId);
-                return Ok(post);    
+                return Ok(post);
             }
             catch (Exception e)
             {
@@ -103,7 +103,7 @@ namespace Blog.API.Controllers
             }
         }
 
-       [HttpDelete("{postId:int}")]
+        [HttpDelete("{postId:int}")]
         public async Task<IActionResult> DeletePost(Guid userId, int blogId, int postId)
         {
             try

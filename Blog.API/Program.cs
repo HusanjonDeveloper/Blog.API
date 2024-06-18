@@ -1,11 +1,4 @@
-using Blog.Common.Models.JwtOptions;
-using Blog.Data.Context;
-using Blog.Data.Repositories;
-using Blog.Services.Api;
 using Blog.Services.Api.Extensions;
-using Blog.Services.Helpers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,14 +8,14 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.AddSecurityDefinition("Bearer" , new OpenApiSecurityScheme()
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Description = "JWT Bearer. : \"Authorization: Bearer {token}\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey
     });
-    
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -35,29 +28,45 @@ builder.Services.AddSwaggerGen(c =>
                 }
             },
             new string[]{}
-        }  
+        }
     });
 });
 
 builder.Services.AddServices(builder);
 
+
 void ConfigureServices(IServiceCollection services)
 {
-   services.AddAuthorization(options =>
-    {
-        options.AddPolicy("OnlyAdmin", policy =>
-        {
-            policy.RequireRole("Admin");
-        });
-    });
+    services.AddAuthorization(options =>
+     {
+         options.AddPolicy("OnlyAdmin", policy =>
+         {
+             policy.RequireRole("Admin");
+         });
+     });
     services.AddMvcCore();
 }
-void  Configure(IApplicationBuilder app, IWebHostEnvironment env)
+void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
     app.UseAuthentication(); // Authentication middleware
     app.UseAuthorization(); // Authorization middleware
     app.UseMvc();
 }
+
+/*
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCors", policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowCredentials();
+        policy.AllowAnyMethod();
+        policy.AllowAnyOrigin();
+        policy.DisallowCredentials();
+    });
+});
+*/
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -73,7 +82,7 @@ app.UseCors(options =>
 });
 
 app.UseHttpsRedirection();
-app.UseHttpsRedirection();
+app.UseAuthorization();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

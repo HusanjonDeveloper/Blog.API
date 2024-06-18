@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using Blog.Common.Models.Blog;
+﻿using Blog.Common.Models.Blog;
 using Blog.Services.Api;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +14,10 @@ namespace Blog.API.Controllers
         {
             _blogService = blogService;
         }
-        
+
         // This Not Releted Blogs
         [HttpGet("not-related-blogs")]
-        public async Task<IActionResult>  GetAllNotRelatedBlogs(Guid userId)
+        public async Task<IActionResult> GetAllNotRelatedBlogs(Guid userId)
         {
             try
             {
@@ -36,7 +35,7 @@ namespace Blog.API.Controllers
         {
             try
             {
-                var blog = await _blogService.GetNotRelatedBlogById(userId,blogId);
+                var blog = await _blogService.GetNotRelatedBlogById(userId, blogId);
                 return Ok(blog);
             }
             catch (Exception e)
@@ -75,9 +74,9 @@ namespace Blog.API.Controllers
             }
         }
 
-        
+
         [HttpPost("/AddBlog")]
-        public async Task<IActionResult> AddUserBlog(Guid userId,[FromBody] CreateBlogModel model)
+        public async Task<IActionResult> AddUserBlog(Guid userId, [FromBody] CreateBlogModel model)
         {
             try
             {

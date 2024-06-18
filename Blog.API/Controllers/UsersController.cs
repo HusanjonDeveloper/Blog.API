@@ -32,7 +32,7 @@ namespace Blog.API.Controllers
             {
                 return BadRequest(e.Message);
             }
-          
+
         }
 
         [HttpGet("{userId:guid}")]
@@ -66,12 +66,12 @@ namespace Blog.API.Controllers
 
         [HttpPost("/Login")]
 
-        public async Task<IActionResult> Login([FromBody]LoginUserModel model)
+        public async Task<IActionResult> Login([FromBody] LoginUserModel model)
         {
             try
             {
                 var user = await _userService.Login(model);
-                return Ok(user);    
+                return Ok(user);
             }
             catch (Exception e)
             {

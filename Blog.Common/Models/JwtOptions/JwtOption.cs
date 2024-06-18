@@ -2,8 +2,8 @@
 
 public class JwtOption
 {
-    public  string Issuer { get; set; }
-    public  string Audience { get; set; }
-    public  string signinKey { get; set; }
-    public  double Minute { get; set; }
+    public string Issuer { get; set; }
+    public string Audience { get; set; }
+    public string signinKey { get; set; }
+    public double Minute { get; set; }
 }
