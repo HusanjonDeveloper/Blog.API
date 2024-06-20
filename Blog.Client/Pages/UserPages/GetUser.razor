@@ -1,6 +1,7 @@
 ﻿@page "/getUser/{UserId:guid}"
 @using Blog.Common.Dtos
-@inject  HttpClient Client
+@using Blog.Services.Client
+@inject  UserIntegration  Integration
 <h3>GetUser</h3>
 <p>@_user?.FirstName</p>
 
