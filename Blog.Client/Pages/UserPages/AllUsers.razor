@@ -1,6 +1,7 @@
 ﻿@page "/allUsers"
 @using Blog.Common.Dtos
-@inject  HttpClient Client
+@using Blog.Services.Client
+@inject  UserIntegration UserIntegration
 <h3>You can see all users in there</h3>
 
 @if (_userDtos?.Count is not 0)
@@ -13,6 +14,7 @@
         <th>UserName</th>
         <th>Created at</th>
         <th>First Blog name</th>
+        <th>Get User</th>
     </tr>
     @{ int count = 0; }
         @foreach (var user in _userDtos!)
@@ -50,25 +52,23 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _userDtos = await Client.GetFromJsonAsync<List<UserDto>>("api/users");
+        _userDtos = await Services.Client.UserIntegration.GetAllUsers();
     }
 }
-
 <style>
-     table {
-         font-family: arial, sans-serif;
-         border-collapse: collapse;
-         width: 100%;
-     }
-     
-     td, th {
-       border: 1px solid #dddddd;
-         text-align:  left;
-         padding: 8px;
-     }
-    
-     tr:nth-child(even){
-      background-color: #dddddd;
-     }
-     
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
 </style>
