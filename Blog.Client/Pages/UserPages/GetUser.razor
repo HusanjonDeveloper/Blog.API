@@ -1,7 +1,6 @@
 ﻿@page "/getUser/{UserId:guid}"
 @using Blog.Common.Dtos
-@using Blog.Services.Client
-@inject  UserIntegration  Integration
+@inject HttpClient Client
 <h3>GetUser</h3>
 <p>@_user?.FirstName</p>
 
@@ -25,7 +24,7 @@
 
     protected override  async Task OnInitializedAsync()
     {
-        _user = await Client.GetFromJsonAsync<UserDto>($"api/Users/{UserId}");
+        _user = await
     }
 }
 <style>

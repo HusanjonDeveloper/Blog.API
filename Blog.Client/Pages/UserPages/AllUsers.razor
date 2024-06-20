@@ -1,7 +1,5 @@
 ﻿@page "/allUsers"
 @using Blog.Common.Dtos
-@using Blog.Services.Client
-@inject  UserIntegration UserIntegration
 <h3>You can see all users in there</h3>
 
 @if (_userDtos?.Count is not 0)
@@ -52,7 +50,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _userDtos = await Services.Client.UserIntegration.GetAllUsers();
+        _userDtos = await Client.GetFromJsonAsync<List<UserDto>>("");
     }
 }
 <style>
