@@ -1,6 +1,5 @@
 ﻿@page "/getUser/{UserId:guid}"
 @using Blog.Common.Dtos
-@inject HttpClient Client
 <h3>GetUser</h3>
 <p>@_user?.FirstName</p>
 
@@ -24,7 +23,7 @@
 
     protected override  async Task OnInitializedAsync()
     {
-        _user = await
+        _user = await Client.GetFromJsonAsync<List<UserDto>>();
     }
 }
 <style>
