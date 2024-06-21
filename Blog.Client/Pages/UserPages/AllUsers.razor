@@ -1,5 +1,6 @@
 ﻿@page "/allUsers"
 @using Blog.Common.Dtos
+@inject HttpClient Client
 <h3>You can see all users in there</h3>
 
 @if (_userDtos?.Count is not 0)

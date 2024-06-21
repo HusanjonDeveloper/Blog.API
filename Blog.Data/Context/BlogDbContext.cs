@@ -6,6 +6,8 @@ namespace Blog.Data.Context
     {
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
+	        Database.EnsureCreated();
+            Database.Migrate();
         }
 
 
@@ -13,7 +15,7 @@ namespace Blog.Data.Context
         {
             optionsBuilder.UseSqlServer("Server=LAPTOP-1FG38VDK;Database=newContext;Integrated Security=true;TrustServerCertificate=True;");
 
-            optionsBuilder.UseLazyLoadingProxies();
+           // optionsBuilder.UseLazyLoadingProxies();
         }
 
         public DbSet<Data.Entities.User> Users { get; set; }
